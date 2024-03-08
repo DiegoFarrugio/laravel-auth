@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
+
+
 
 //Models 
 use App\Models\Project;
@@ -26,7 +30,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.projects.create');
     }
 
     /**
@@ -34,7 +38,23 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $projectData = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string|max:10000',
+        ]);
+
+        // dd($request);
+        // $projectData = $request->all();
+        $slug = Str::slug($projectData['title']);
+        $projectData['slug'] =$slug;
+
+        $project = Project::create([
+            'title' => $projectData['title'],
+            'slug' => $slug,
+            'content' => $projectData['content'],
+        ]);
+
+        return redirect()->route('admin.projects.show', compact('project'));
     }
 
     /**
@@ -50,7 +70,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        return view('admin.projects.edit', compact('project'));
     }
 
     /**
@@ -58,7 +78,19 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        $projectData = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string|max:10000',
+        ]);
+
+        $projectData = $request->all();
+        $slug = Str::slug($projectData['title']);
+        
+
+        $project->update($projectData);
+
+        return view('admin.projects.show', compact('project'));
+        return redirect()->route('admin.projects.show', compact('project'));
     }
 
     /**
@@ -66,6 +98,6 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        return redirect()->route('admin.projects.index');
     }
 }

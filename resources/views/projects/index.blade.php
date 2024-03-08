@@ -15,7 +15,7 @@
             <div class="card">
                 <div class="card-body">
                     <h4>
-                        {{$project->tile}}
+                        {{$project->title}}
                     </h4>
 
                     <a href="{{route('projects.show', ['project' => $project->slug])}}">

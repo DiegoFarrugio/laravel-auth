@@ -11,7 +11,7 @@ class Project extends Model
 
     //Tutte le colonne abilitate al mass-assignment
     protected $fillable = [
-        'tile',
+        'title',
         'slug',
         'content'
     ];

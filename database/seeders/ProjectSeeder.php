@@ -30,7 +30,7 @@ class ProjectSeeder extends Seeder
             $slug = Str::slug($tile);
 
             $project = Project::create([
-                'tile' => $tile,
+                'title' => $tile,
                 'slug' => $slug,
                 'content' => fake()->paragraph(),
             ]);     

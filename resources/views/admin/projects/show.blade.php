@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-body">
                     <h1 class="text-center text-success mb-5">
-                        {{$project->tile}}
+                        {{$project->title}}
                     </h1>
 
                     <p>

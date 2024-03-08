@@ -11,6 +11,12 @@
                         Tutti i Project!
                     </h1>
 
+                    <div class="mb-3">
+                        <a href="{{ route('admin.projects.create') }}" class="btn btn-success w-100">
+                            + Aggiungi
+                        </a>
+                    </div>
+
                     <table class="table">
                         <thead>
                           <tr>
@@ -24,12 +30,25 @@
                             @foreach ($projects as $project)
                             <tr>
                                 <th scope="row">{{$project->id}} </th>
-                                <td>{{$project->tile}}</td>
+                                <td>{{$project->title}}</td>
                                 <td>{{$project->created_at->format('H:i d/m/Y')}}</td>
                                 <td>
                                     <a href="{{route('admin.projects.show', ['project' => $project->id ])}}" class="btn btn-primary ">
                                         PULSANTE
                                     </a>
+
+                                    <a href="{{ route('admin.projects.edit', ['project' => $project->id]) }}" class="btn btn-xs btn-warning">
+                                        Modifica
+                                    </a>
+
+                                    <form class="d-inline-block" action="{{ route('admin.projects.destroy', ['project' => $project->id]) }}" method="post" onsubmit="return confirm('Sei sicuro di voler eliminare?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">
+                                            Elimina
+                                        </button>
+                                    </form>
+
                                 </td>
                               </tr>
                             @endforeach
